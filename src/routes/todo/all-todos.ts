@@ -7,7 +7,7 @@ const allTodos: Router = Router();
 allTodos.use(express.json());
 
 allTodos.get("/", async (req: Request, res: Response) => {
-    const authToken = req.cookies.get("auth-token");
+    const authToken = req.cookies["auth-token"];
     const user = decodeToken(authToken);
 
     if (!user) {

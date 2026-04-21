@@ -8,9 +8,8 @@ const addTodo: Router = Router()
 addTodo.use(express.json());
 
 addTodo.post("/", async (req: Request, res: Response) => {
-    const authToken = req.cookies?.get("auth-token");
-    console.log(authToken);
-    
+    const authToken = req.cookies["auth-token"];
+
     const user = decodeToken(authToken);
 
     if (!user) {
@@ -42,7 +41,7 @@ addTodo.post("/", async (req: Request, res: Response) => {
         const todo = await prisma.todo.create({
             data: {
                 title: req.body.title,
-                author: { connect: { id: 1 } }
+                author: { connect: { id: parseInt(user.userId) } }
             }
         });
         return res.json({ status: "success" });

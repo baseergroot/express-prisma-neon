@@ -41,7 +41,8 @@ createUser.post("/", async (req: Request, res: Response) => {
         });
         return res.cookie("auth-token", authToken, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         }).status(201).json({ message: "user created", token: authToken });
     }
