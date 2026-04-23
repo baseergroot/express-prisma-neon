@@ -1,6 +1,5 @@
 import express, { Router, type Request, type Response } from "express";
 import { prisma } from "../../db.js";
-import { decodeToken } from "../../helpers/jwt.js";
 
 
 
@@ -10,12 +9,8 @@ updateTodo.use(express.json());
 
 updateTodo.put("/", async (req: Request, res: Response) => {
     const { todoId, title, done } = req.body;
-    const authToken = req.cookies.get("auth-token");
-    const user = decodeToken(authToken);
+    const user = req.user
 
-    if (!user) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
     if (!todoId) {
         return res.status(400).json({ error: "Todo ID is required" });
     }

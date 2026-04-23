@@ -9,7 +9,7 @@ createUser.use(express.json());
 
 createUser.post("/", async (req: Request, res: Response) => {
     const { username, password } = req.body;
-    console.log(username, password);
+    // console.log(username, password);
     if (!username || !password) {
         return res.status(400).json({ message: "username and password are required" });
     }

@@ -1,20 +1,15 @@
 import express, { Router, type Request, type Response } from "express";
 import { prisma } from "../../db.js";
-import { decodeToken } from "../../helpers/jwt.js";
 
 
 const allTodos: Router = Router();
 allTodos.use(express.json());
 
 allTodos.get("/", async (req: Request, res: Response) => {
-    const authToken = req.cookies["auth-token"];
-    const user = decodeToken(authToken);
-
-    if (!user) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
+    const user = req.user
 
     try {
+        // console.log("user from middleware: ", req.user)
         const todos = await prisma.todo.findMany({
             where: {
                 authorId: parseInt(user.userId)
