@@ -6,6 +6,7 @@ import allTodos from "./todo/all-todos.js";
 import middleware from "./middleware.js";
 import createUser from "./user/create-user.js";
 import login from "./user/login.js";
+import user from "./user/user.js";
 
 
 const apiRouter: Router = Router();
@@ -16,5 +17,6 @@ apiRouter.use("/delete-todo", middleware, deleteTodo)
 apiRouter.use("/update-todo", middleware, updateTodo)
 apiRouter.use("/create-user", createUser);
 apiRouter.use("/login", login);
+apiRouter.use("/user", middleware, user);
 
 export default apiRouter;
